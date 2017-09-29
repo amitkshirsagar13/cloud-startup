@@ -1,1 +1,4 @@
 http://localhost.terminix.com:8761/registry/config/spring-module/local
+
+http://localhost:8881/rest/admin/info
+http://localhost:8881/rest/admin/health

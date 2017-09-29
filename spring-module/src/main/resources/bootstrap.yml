@@ -6,6 +6,6 @@ spring:
   cloud:
     config:
       label: master
-      uri: http://${VHOSTNAME:${HOSTNAME:localhost.shinigami.io}}:${VPORT:8761}/registry/config
-      username: config
-      password: config
+      uri: http://${VCONFIGHOST:localhost.shinigami.io}:${VCONFIGPORT:8761}/registry/config
+      username: ${VCONFIGUSER:config}
+      password: ${VCONFIGPASS:config}
