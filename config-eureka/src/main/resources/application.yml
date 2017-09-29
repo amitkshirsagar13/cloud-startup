@@ -1,23 +1,21 @@
-spring.profiles.active: ${VPROFILE:local}
+spring.profiles.active: ${VPROFILE:native}
 
 server:
+  context-path: /${VCONTEXTPATH:registry}
   display-name: ${VHOSTNAME:${HOSTNAME}}
   port: ${VPORT:8761}
   
 eureka:
   instance:
-    hostname: localhost
-    metadataMap:
-      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    leaseRenewalIntervalInSeconds: 3
+    hostname: ${HOSTNAME}
+    instanceId: ${HOSTNAME:localhost.shinigami.io}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+    leaseRenewalIntervalInSeconds: 5
     leaseExpirationDurationInSeconds: 5
   client:
-    registerWithEureka: true
-    fetchRegistry: true
-    healthcheck:
-      enabled: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+    service-url: 
+      defaultZone: http://localhost.shinigami.io:${server.port}/registry/eureka
+    registerWithEureka: false
+    fetchRegistry: false
   server:
     renewalPercentThreshold: 0.0
     enableSelfPreservation: true
@@ -30,6 +28,11 @@ security:
   user:
     name: ${VEUREKAUSER:eurekaconfig}
     password: ${VEUREKAPASSWD:eurekapasswd}
+
+management:
+  context-path: /admin
+  security:
+    enabled: true
     
 spring:
   user:
@@ -41,15 +44,7 @@ spring:
       uri: config
       server:
         prefix: /config
+        native:
+          search-locations: classpath:spring-config-master/
         git:
-          uri: ${VGITCONFIGURL}
-
----
-spring:
-  profiles: local
-
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/amitkshirsagar13/spring-config.git
+          uri: ${VGITCONFIGURL:https://github.com/amitkshirsagar13/spring-config.git}

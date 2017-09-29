@@ -1,0 +1,11 @@
+eureka:
+  instance:
+    instanceId: ${VHOSTNAME:${HOSTNAME:localhost.shinigami.io}}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+    statusPageUrlPath: ${server.context-path}${management.context-path}/info
+    healthCheckUrlPath: ${server.context-path}${management.context-path}/health
+    leaseRenewalIntervalInSeconds: 5
+  client:
+    region: default
+    serviceUrl:
+      defaultZone: http://${VEUREKAUSER:eurekaconfig}:${VEUREKAPASSWD:eurekapasswd}@${VHOSTNAME:${HOSTNAME:localhost.shinigami.io}}:${VPORT:8761}/registry/eureka
+    enabled: true

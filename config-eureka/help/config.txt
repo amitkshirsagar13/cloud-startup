@@ -1,1 +1,1 @@
-http://localhost.shinigami.io:8761/config/webhook/local
+http://localhost.terminix.com:8761/registry/config/spring-module/local
