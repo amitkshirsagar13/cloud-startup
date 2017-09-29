@@ -1,3 +1,11 @@
+spring:
+  cloud:
+    config:
+      discovery: 
+        enabled: true
+        serviceId: config-server
+  user:
+    roles: ACTUATOR
 eureka:
   instance:
     instanceId: ${VHOSTNAME:${HOSTNAME:localhost.shinigami.io}}:${spring.application.name}:${spring.application.instance_id:${server.port}}
@@ -7,5 +15,5 @@ eureka:
   client:
     region: default
     serviceUrl:
-      defaultZone: http://${VEUREKAUSER:eurekaconfig}:${VEUREKAPASS:eurekapasswd}@${VEUREKAHOST:localhost.shinigami.io}:${VEUREKAPORT:8761}/registry/eureka
+      defaultZone: http://${VEUREKAUSER:config}:${VEUREKAPASS:config}@${VEUREKAHOST:localhost.shinigami.io}:${VEUREKAPORT:8761}/registry/eureka
     enabled: true

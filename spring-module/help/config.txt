@@ -1,0 +1,1 @@
+curl -d {} http://module:module@localhost:8881/rest/admin/refresh

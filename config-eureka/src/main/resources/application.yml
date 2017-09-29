@@ -1,42 +1,35 @@
 spring.profiles.active: ${VPROFILE:native}
-
 server:
   context-path: /${VCONTEXTPATH:registry}
-  display-name: ${VHOSTNAME:${HOSTNAME}}
+  display-name: ${VHOSTNAME:${HOSTNAME:localhost.shinigami.io}}
   port: ${VPORT:8761}
-  
 eureka:
   instance:
-    hostname: ${HOSTNAME}
-    instanceId: ${HOSTNAME:localhost.shinigami.io}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+    instanceId: ${VHOSTNAME:${HOSTNAME:localhost.shinigami.io}}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+    statusPageUrlPath: ${server.context-path}${management.context-path}/info
+    healthCheckUrlPath: ${server.context-path}${management.context-path}/health
     leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 5
   client:
-    service-url: 
-      defaultZone: http://localhost.shinigami.io:${server.port}/registry/eureka
-    registerWithEureka: false
+    region: default
+    serviceUrl:
+      defaultZone: http://${VEUREKAUSER:config}:${VEUREKAPASS:config}@${VEUREKAHOST:localhost.shinigami.io}:${VEUREKAPORT:8761}/registry/eureka
+    enabled: true
     fetchRegistry: false
   server:
     renewalPercentThreshold: 0.0
     enableSelfPreservation: true
     waitTimeInMsWhenSyncEmpty: 0
-
-    
 security:
   basic:
-    enabled: false
+    enabled: true
   user:
-    name: ${VEUREKAUSER:eurekaconfig}
-    password: ${VEUREKAPASSWD:eurekapasswd}
-
+    name: ${VEUREKAUSER:config}
+    password: ${VEUREKAPASS:config}
 management:
   context-path: /admin
   security:
     enabled: true
-    
 spring:
-  user:
-    roles: ACTUATOR
   cloud:
     config:
       discovery:

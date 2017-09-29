@@ -3,11 +3,11 @@ server:
   port: 8881
 security:
   basic:
-    enabled: false
+    enabled: true
   user:
-    name: admin
-    password: admin
+    name: module
+    password: module
 management:
   context-path: /admin
   security:
-    enabled: false
+    enabled: true
